@@ -6,6 +6,8 @@ import 'package:myapp/utils/authentication.dart';
 import 'package:myapp/screens/reset_password.dart';
 import 'package:myapp/screens/signup.dart';
 
+
+
 late String _email, _password;
 String _emailErrorMessage = '';
 String _passwordErrorMessage = '';
@@ -121,6 +123,7 @@ class _SigninState extends State<Signin> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login Page'),
+        backgroundColor: Colors.teal,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -138,7 +141,17 @@ class _SigninState extends State<Signin> {
                 onPressed: () {
                   Authentication.signinWithGoogle(context);
                 },
-                child: const Text('Sign in with Google'),
+                child: const Text(
+                  'Sign in with Google',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
+                  ),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
               ),
               const SizedBox(height: 20),
               const Divider(thickness: 2),
@@ -194,6 +207,7 @@ class _SigninState extends State<Signin> {
                   _signin(context);
                 },
                 child: const Text('Sign In'),
+                
               ),
               SizedBox(height: 10),
               ElevatedButton(
@@ -201,6 +215,12 @@ class _SigninState extends State<Signin> {
                   _authenticate(context);
                 },
                 child: const Text('Fingerprint Sign In'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
+                  ),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
               ),
               const SizedBox(height: 10),
               GestureDetector(

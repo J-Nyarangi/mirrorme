@@ -35,6 +35,12 @@ class _VerifyScreenState extends State<VerifyScreen> {
         MaterialPageRoute(builder: (context) => Signin()),
         (Route<dynamic> route) => false,
       );
+
+      // Add this section to navigate back to your app
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Signin()),
+      );
     }
   }
 

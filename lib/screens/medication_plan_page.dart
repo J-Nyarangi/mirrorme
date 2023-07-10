@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'menu.dart';
+import 'fragments.dart';
 
 class MedicationPlanPage extends StatefulWidget {
   const MedicationPlanPage({Key? key}) : super(key: key);
@@ -56,8 +58,10 @@ class _MedicationPlanPageState extends State<MedicationPlanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+      backgroundColor: Colors.teal,
         title: const Text('Medication Plan'),
       ),
+      drawer: AppMenu(),
       body: Column(
         children: [
           Padding(
@@ -101,6 +105,7 @@ class _MedicationPlanPageState extends State<MedicationPlanPage> {
               },
             ),
           ),
+          Fragments(),
         ],
       ),
     );

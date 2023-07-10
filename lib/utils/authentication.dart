@@ -4,6 +4,7 @@ import 'package:myapp/screens/homepage.dart';
 import 'package:myapp/screens/verifyscreen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:myapp/screens/signin.dart';
 
 
 class Authentication {
@@ -102,7 +103,7 @@ static final FirebaseAuth _auth = FirebaseAuth.instance;
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((_) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => VerifyScreen()),
       );
     }).catchError((error) {
       String errorMessage = 'Sign up failed. Please try again.';
@@ -146,33 +147,42 @@ static final FirebaseAuth _auth = FirebaseAuth.instance;
   }
 
   static Future<void> signout(BuildContext context) async {
-    final confirmed = await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Sign Out'),
-        content: const Text('Are you sure you want to sign out?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context, false); // User canceled sign out
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context, true); // User confirmed sign out
-            },
-            child: const Text('Sign Out'),
-          ),
-        ],
-      ),
-    );
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Sign Out'),
+      content: const Text('Are you sure you want to sign out?'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context, false); // User canceled sign out
+          },
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context, true); // User confirmed sign out
+          },
+          child: const Text('Sign Out'),
+        ),
+      ],
+    ),
+  );
 
-    if (confirmed == true) {
+  if (confirmed == true) {
+    try {
       await FirebaseAuth.instance.signOut();
-      // Redirect to the login or home page
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Signin()),
+        (route) => false, // Clear the navigation stack
+      );
+    } catch (e) {
+      print('Error signing out: $e');
+      // Handle the sign-out error
     }
   }
+}
 
   static void checkSignedIn(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;

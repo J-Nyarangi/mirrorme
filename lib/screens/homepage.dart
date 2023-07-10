@@ -1,53 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/screens/signin.dart';
-import 'package:myapp/screens/health_issues_page.dart';
-import 'package:myapp/screens/medicine_schedule_page.dart';
-import 'package:myapp/screens/medication_plan_page.dart';
-import 'package:myapp/screens/doctors_page.dart';
-import 'package:myapp/screens/documents_page.dart';
-import 'package:myapp/screens/appointments_history_page.dart';
-import 'package:myapp/screens/memories_page.dart';
-import 'package:myapp/screens/chat_page.dart';
+import 'menu.dart';
+import 'fragments.dart';
+import 'appointments_history_page.dart';
+import 'medicine_schedule_page.dart';
+import 'memories_page.dart';
+import 'documents_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
-  Future<void> _signOut(BuildContext context) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Sign Out'),
-        content: Text('Are you sure you want to sign out?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false); // Dismiss the dialog and return false
-            },
-            child: Text('No'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true); // Dismiss the dialog and return true
-            },
-            child: Text('Yes'),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true) {
-      try {
-        await FirebaseAuth.instance.signOut();
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const Signin()),
-        );
-      } catch (e) {
-        print('Error signing out: $e');
-        // Display an error message or handle the error as needed
-      }
-    }
-  }
 
   Future<void> _navigateToPage(BuildContext context, Widget page) async {
     await Future.delayed(Duration(milliseconds: 100)); // Add a slight delay before navigation
@@ -64,147 +26,233 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.teal,
         title: const Text('MirrorMe\'s App'),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.teal,
-              ),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text('Health issues'),
-                onTap: () {
-                  _navigateToPage(context, HealthIssuesPage());
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text('Medicine Schedule'),
-                onTap: () {
-                  _navigateToPage(context, MedicineSchedulePage());
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text('Medication Plan'),
-                onTap: () {
-                  _navigateToPage(context, MedicationPlanPage());
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text('Doctors'),
-                onTap: () {
-                  _navigateToPage(context, DoctorsPage());
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text('Documents'),
-                onTap: () {
-                  _navigateToPage(context, DocumentsPage());
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text('Appointments history'),
-                onTap: () {
-                  _navigateToPage(context, AppointmentsHistoryPage());
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text('Memories'),
-                onTap: () {
-                  _navigateToPage(context, MemoriesPage());
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text('Chat'),
-                onTap: () {
-                  _navigateToPage(context, ChatPage());
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text('Chat'),
-                onTap: () {
-                  _navigateToPage(context, ChatPage());
-                },
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text('Sign Out'),
-                onTap: () {
-                  _signOut(context);
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: AppMenu(),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'MirrorMe App',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
             const SizedBox(height: 20),
             Text(
-              'Here you can find information and tools to help manage Alzheimer\'s disease.',
-              textAlign: TextAlign.center,
+              'Welcome to the Home Screen!',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.teal,
               ),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
-            Container(
-              padding: EdgeInsets.only(bottom: 0),
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black45),
-                ),
-                onPressed: () {
-                  _signOut(context);
-                },
-                child: const Text(
-                  'Sign Out',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.white,
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.all(16),
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Handle tap on medicine schedule card
+                       Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MedicineSchedulePage()),
+                      );
+                      
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.local_pharmacy,
+                            color: Colors.teal,
+                            size: 48,
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            'Go to Medicine Schedule',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.teal,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'View and update your medical information.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () {
+                      // Handle tap on appointments card
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AppointmentsPage()),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.calendar_today,
+                            color: Colors.teal,
+                            size: 48,
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            'View Appointments',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.teal,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'View and manage your appointments.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () {
+                      // Handle tap on memories card
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MemoriesPage()),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.book,
+                            color: Colors.teal,
+                            size: 48,
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            'My Memories',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.teal,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'View and manage your memories\' information.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DocumentsPage()),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.folder,
+                            color: Colors.teal,
+                            size: 48,
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            'My Documents',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.teal,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'View and add documents.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
+            Fragments(), // Add the Fragments widget here
           ],
         ),
       ),

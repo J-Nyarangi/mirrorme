@@ -71,7 +71,12 @@ class _SignupState extends State<Signup> {
               height: 50,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                  ),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
                 onPressed: () {
                   // Sign up with email
