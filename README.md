@@ -11,7 +11,7 @@ MirrorMe is a Flutter application for Android v10 and above. The application use
 
 To install this project, these are the steps necessary:
 1. Fork the project
-2. Navigate to the **Code** button on the forked repository and download the zipped folder. Alternatively, you could copy the project link and use "git clone 'project\url' " command on Git Bash. 
+2. Navigate to the **Code** button on the forked repository and download the zipped folder. Alternatively, you could copy the project link and use {"git clone 'project\url' "} command on Git Bash. 
 3. Select the target folder where you intend to unzip your downloaded folder or clone the project to.
 4. Enable developer settings on your Android phone. This procedure may vary depending on your phone manufacturer. This [link](https://developer.android.com/studio/debug/dev-options) provides instructions on how to enable these settings on your phone.
 5. Connect your laptop/desktop to your mobile device via USB cable.
