@@ -1,10 +1,10 @@
 # MirrorMe Application
 
-## A Blockchain-based Application for Managing Medical and Personal Information of Alzheimer's Patients.
+## An Application for Managing Medical and Personal Information of Alzheimer's Patients.
 
 MirrorMe is a mobile-application developed to help patients with Alzheimer's disease manage their activities and keep track of personal and medical records. Given the nature of their ailment, people with Alzheimer's have challenges with long-term memory and therefore need constant reminding about events in their lives. The application acts as an intuitive and personalized diary for these patients.
 
-MirrorMe is a Flutter application for Android v10 and above. The application uses blockchain technoology to decentralize data storage and provide security in the management of transactions and storage of data.
+MirrorMe is a Flutter application for Android v10 and above. 
 
 
 ### Installation of the Project
